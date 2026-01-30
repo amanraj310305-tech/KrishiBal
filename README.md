@@ -29,8 +29,7 @@ Developed as a personal/academic project by **Aman Raj** (B.Tech CSE, GITAM Univ
 
 ## Project Presentation
 Download the full project presentation (slides covering architecture, methodology, demos, results, and future scope):  
-**[Krisibal Project Presentation (PDF)](Krisibal-Presentation.pdf)**  
-*(If you uploaded it in a subfolder like `/docs/`, change the link to `docs/Krisibal-Presentation.pdf`.)*
+**[Krisibal Project Presentation (PDF)](KrishiBal_compressed.pdf)**  
 
 ## Tech Stack
 - **Languages**: Python (core), C, Java  
