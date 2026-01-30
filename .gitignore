@@ -1,0 +1,6 @@
+.env
+*.json
+__pycache__/
+uploads/
+static/audio/
+forum.db
