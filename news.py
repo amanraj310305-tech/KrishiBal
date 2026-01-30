@@ -1,35 +1,4 @@
-'''import requests
 
-# API endpoint and key
-url = "https://api.apitube.io/v1/news/everything"
-params = {
-    "q": "agriculture",
-    "per_page": 10,
-    "api_key": "api_live_oSVPOcJOGleuvsMvuuOcYg3EllyCmFFJOmrrvG66PXosdd87UFz0U1TP"
-}
-
-# Make the request
-response = requests.get(url, params=params)
-
-# Convert response to JSON
-data = response.json()
-
-# Check if the request was successful
-if response.status_code == 200:
-    # Ensure 'data' and 'articles' keys exist
-    if 'data' in data and 'articles' in data['data']:
-        articles = data['data']['articles']
-        for article in articles:
-            print(f"Title       : {article.get('title', 'N/A')}")
-            print(f"Source      : {article.get('source', {}).get('name', 'N/A')}")
-            print(f"Published At: {article.get('published_at', 'N/A')}")
-            print(f"URL         : {article.get('url', 'N/A')}")
-            print("-" * 80)
-    else:
-        print("No articles found in the response.")
-else:
-    print(f"Request failed with status code {response.status_code}")
-    print(data)'''
 import os
 import requests
 from datetime import datetime
@@ -143,4 +112,5 @@ def search_news(query):
             return {'success': False, 'error': 'No news found'}
 
     except Exception as e:
+
         return {'success': False, 'error': str(e)}
