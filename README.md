@@ -1,45 +1,76 @@
-# KrishiBal
-# Krisibal – AI-Driven Smart Farming Platform
+# KrishiBal – AI-Driven Smart Farming Platform for Smallholder Agriculture
 
-**Empowering Indian farmers with accessible, multilingual AI tools for better decision-making and profitability.**
+KrishiBal is a research-oriented AI platform designed to support smallholder farmers in India through computer vision, conversational AI and real-time data integration. The system focuses on building accessible, multilingual and low-cost decision-support tools for agricultural advisory, crop health monitoring and information access in low-resource rural environments.
 
-Krisibal is a comprehensive AI platform designed specifically for smallholder farmers in India. It provides agriculture-related decision support **in local languages** (e.g., Hindi, Telugu, and regional dialects), combining computer vision for crop monitoring, NLP-powered chatbots for instant advice, real-time data integrations, and community features to help reduce crop losses and improve income.
+The project was developed by **Aman Raj (B.Tech Computer Science Engineering, GITAM University)** as an applied research initiative aimed at studying how modern machine learning and natural language technologies can be deployed responsibly for sustainable agriculture and social impact.
 
-Developed as a personal/academic project by **Aman Raj** (B.Tech CSE, GITAM University) to address key challenges in rural agriculture, such as limited access to timely information and market opportunities.
+---
 
-## Key Features
-- **Plant Disease Detection**  
-  Image-based classification model to identify crop diseases from photos and suggest appropriate treatments/remedies.
+## Research Motivation
 
-- **Multilingual AI Chatbot**  
-  Text and audio input support for answering farming queries, providing advisories, and personalized guidance in local languages.
+Smallholder farmers frequently experience delayed crop disease diagnosis, limited access to agronomic expertise, language barriers in digital platforms, and fragmented availability of weather, policy and market information.  
+This project investigates how computer vision and conversational AI systems, combined with real-time data pipelines, can provide practical and scalable decision-support solutions in multilingual and low-infrastructure agricultural settings.
 
-- **Real-Time Information Integration**  
-  - Weather forecasting  
-  - Latest agricultural news  
-  - Government scheme updates (e.g., PM-KISAN, crop insurance, subsidies)  
-  - Market prices and mandi rates for better selling decisions
+---
 
-- **Community Forum & Direct-to-Consumer Marketplace**  
-  - Platform for farmers to collaborate, share experiences, and seek peer advice  
-  - Marketplace connecting farmers directly with buyers to eliminate middlemen and increase profitability
+## Core Contributions
 
-- **Robust Data Pipeline**  
-  Extensive data preprocessing, feature engineering, model training, evaluation, and experimentation for reliable performance.
+### Plant Disease Detection (Computer Vision)
+A deep learning–based image classification pipeline that detects crop diseases from farmer-captured images and returns interpretable disease labels along with recommended treatment measures. The system includes image preprocessing, model inference, class mapping and web-based deployment for real-time usage.
+
+### Multilingual Conversational Advisory System
+A conversational AI system supporting both text and voice queries for delivering agricultural guidance. The module integrates speech-to-text, domain-focused large language model prompting, and text-to-speech synthesis to enable accessible interaction for farmers with diverse literacy and language backgrounds.
+
+### Real-Time Agricultural Information Integration
+The platform aggregates and exposes multiple external data sources, including localized weather information, agriculture-related news and government scheme updates, enabling context-aware advisory and decision support.
+
+### Community Knowledge Sharing and Farmer Marketplace
+A lightweight forum and direct farmer-to-consumer marketplace interface that enables peer knowledge exchange, collaborative problem solving and improved market access for smallholder farmers.
+
+### End-to-End Machine Learning and Data Pipeline
+A structured research workflow covering dataset preparation, preprocessing, feature engineering, model training, evaluation and iterative experimentation to ensure reliable performance and reproducibility.
+
+---
+
+## Research Scope and Future Work
+
+Future research directions include multilingual speech recognition and translation for regional languages, early crop stress and disease severity estimation, multimodal fusion of satellite imagery with ground-level images, and controlled evaluation studies with real farmer interaction data to assess robustness, usability and fairness of the advisory system.
+
+---
 
 ## Project Presentation
-Download the full project presentation (slides covering architecture, methodology, demos, results, and future scope):  
-**[Krisibal Project Presentation (PDF)](KrishiBal_compressed.pdf)**  
 
-## Tech Stack
-- **Languages**: Python (core), C, Java  
-- **Frameworks & Libraries**: Pandas, NumPy, Matplotlib, scikit-learn, OpenCV, YOLOv8, NLTK (NLP), Machine Learning tools  
-- **Databases**: SQL, MongoDB  
-- **Tools & Integrations**: REST APIs (weather, news, government/market data), Git/GitHub, Google Colab, Research Workflow  
-- **Other**: Data Preprocessing, Feature Engineering, Model Training/Evaluation, Experimentation
+Download the full project presentation (slides covering architecture, methodology, experiments, demonstrations, results and future scope):  
+**[Krisibal Project Presentation (PDF)](KrishiBal_compressed.pdf)**
 
-## How to Run / Explore
-1. Clone the repository:  
-   ```bash
-   git clone https://github.com/yourusername/krisibal-ai-smart-farming.git
-   cd krisibal-ai-smart-farming
+---
+
+## Technical Stack
+
+**Programming Languages**  
+Python (primary), C, Java
+
+**Machine Learning and Data Science**  
+NumPy, Pandas, scikit-learn, OpenCV, PyTorch, YOLOv8
+
+**Natural Language Processing and Speech**  
+NLTK, large-language-model based conversational pipelines, speech-to-text and text-to-speech components
+
+**Backend and Web**  
+Flask, REST APIs
+
+**Databases**  
+SQL and NoSQL (cloud-based data storage)
+
+**Tools**  
+Git, GitHub, Google Colab, Jupyter notebooks, research experimentation workflows
+
+---
+
+## How to Run
+
+```bash
+git clone https://github.com/yourusername/krisibal-ai-smart-farming.git
+cd krisibal-ai-smart-farming
+pip install -r requirements.txt
+python app.py
