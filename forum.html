@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRISIBAL Forum - Farmer Community</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e5128 0%, #2d6a4f 50%, #40916c 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            background: rgba(21, 67, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 48px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-text h1 {
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-text p {
+            color: rgba(255,255,255,0.8);
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 12px 28px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .forum-header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px 24px 0 0;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .forum-header h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: #1e5128;
+            margin-bottom: 10px;
+        }
+
+        .forum-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .forum-content {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            padding: 30px 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            min-height: 400px;
+            animation: fadeInUp 0.6s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .new-message-section {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 0 0 24px 24px;
+            padding: 30px 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.6s ease-out 0.4s backwards;
+        }
+
+        .new-message-box {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .new-message-input {
+            flex: 1;
+            padding: 16px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .new-message-input:focus {
+            outline: none;
+            border-color: #2d6a4f;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.1);
+        }
+
+        .post-btn {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #2d6a4f 0%, #1e5128 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(30, 81, 40, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .post-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(30, 81, 40, 0.6);
+        }
+
+        .post-btn:active {
+            transform: translateY(0);
+        }
+
+        .message-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            animation: slideIn 0.4s ease-out;
+            border-left: 4px solid #2d6a4f;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+
+        .message-text {
+            color: #2d3748;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .message-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .message-time {
+            color: #718096;
+            font-size: 13px;
+        }
+
+        .reply-btn {
+            background: rgba(45, 106, 79, 0.1);
+            color: #2d6a4f;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .reply-btn:hover {
+            background: #2d6a4f;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .reply-section {
+            margin-left: 40px;
+            margin-top: 15px;
+            padding-left: 20px;
+            border-left: 3px solid rgba(45, 106, 79, 0.2);
+        }
+
+        .reply-input-box {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .reply-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .reply-input:focus {
+            outline: none;
+            border-color: #2d6a4f;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
+        }
+
+        .send-reply-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #2d6a4f 0%, #1e5128 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-reply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 81, 40, 0.4);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #718096;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            font-size: 18px;
+            color: #4a5568;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(45, 106, 79, 0.2);
+            border-radius: 50%;
+            border-top-color: #2d6a4f;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .forum-header,
+            .forum-content,
+            .new-message-section {
+                padding: 20px;
+            }
+
+            .forum-header h2 {
+                font-size: 28px;
+            }
+
+            .new-message-box {
+                flex-direction: column;
+            }
+
+            .post-btn {
+                width: 100%;
+            }
+
+            .reply-section {
+                margin-left: 15px;
+                padding-left: 15px;
+            }
+
+            .message-card {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo-section">
+            <div class="logo-icon">🌾</div>
+            <div class="logo-text">
+                <h1>KRISIBAL</h1>
+                <p>Agricultural Intelligence</p>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-btn">🏠 Home</a>
+            <a href="/forum" class="nav-btn active">💬 Forum</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="forum-header">
+            <h2>👨‍🌾 Farmer Community Forum</h2>
+            <p>Connect, share experiences, and learn from fellow farmers</p>
+        </div>
+
+        <div class="forum-content">
+            <div id="forum">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: 20px;">Loading messages...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="new-message-section">
+            <h3 style="color: #1e5128; margin-bottom: 20px; font-size: 20px;">💭 Start a New Discussion</h3>
+            <div class="new-message-box">
+                <textarea
+                    class="new-message-input"
+                    id="messageInput"
+                    placeholder="Share your thoughts, ask questions, or start a discussion..."
+                    rows="3"
+                ></textarea>
+                <button class="post-btn" onclick="postMessage()">Post</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadMessages() {
+            try {
+                let res = await fetch("/messages");
+                let messages = await res.json();
+
+                let forum = document.getElementById("forum");
+
+                if (messages.length === 0) {
+                    forum.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">💬</div>
+                            <div class="empty-state-text">No messages yet. Be the first to start a discussion!</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                forum.innerHTML = "";
+
+                function renderMessages(parentId, indent = 0) {
+                    messages.filter(m => m.parent_id === parentId).forEach(msg => {
+                        let box = document.createElement("div");
+                        box.className = "message-card";
+                        if (indent > 0) {
+                            box.style.marginLeft = "40px";
+                            box.style.borderLeft = "4px solid rgba(45, 106, 79, 0.3)";
+                        }
+
+                        let timestamp = msg.timestamp;
+                        if (timestamp && timestamp.includes('T')) {
+                            const date = new Date(timestamp);
+                            timestamp = date.toLocaleString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                        }
+
+                        box.innerHTML = `
+                            <div class="message-text">${msg.text}</div>
+                            <div class="message-meta">
+                                <span class="message-time">🕐 ${timestamp}</span>
+                                <button class="reply-btn" onclick="showReplyBox(${msg.id}, this)">
+                                    ↩️ Reply
+                                </button>
+                            </div>
+                            <div class="reply-section"></div>
+                        `;
+                        forum.appendChild(box);
+                        renderMessages(msg.id, indent + 1);
+                    });
+                }
+
+                renderMessages(null, 0);
+            } catch (error) {
+                document.getElementById("forum").innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <div class="empty-state-text">Error loading messages. Please refresh the page.</div>
+                    </div>
+                `;
+            }
+        }
+
+        async function postMessage(parentId = null) {
+            let input = parentId
+                ? document.getElementById("replyInput" + parentId)
+                : document.getElementById("messageInput");
+            let text = input.value.trim();
+
+            if (!text) {
+                alert("Please enter a message!");
+                return;
+            }
+
+            try {
+                await fetch("/messages", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text: text, parent_id: parentId })
+                });
+
+                input.value = "";
+                loadMessages();
+            } catch (error) {
+                alert("Error posting message. Please try again.");
+            }
+        }
+
+        function showReplyBox(id, el) {
+            let section = el.closest('.message-card').querySelector('.reply-section');
+            section.innerHTML = `
+                <div class="reply-input-box">
+                    <input
+                        type="text"
+                        class="reply-input"
+                        id="replyInput${id}"
+                        placeholder="Write your reply..."
+                        onkeypress="if(event.key==='Enter') postMessage(${id})"
+                    >
+                    <button class="send-reply-btn" onclick="postMessage(${id})">Send</button>
+                </div>
+            `;
+            document.getElementById("replyInput" + id).focus();
+        }
+
+        // Load messages on page load
+        loadMessages();
+
+        // Auto-refresh every 10 seconds
+        setInterval(loadMessages, 10000);
+
+        // Allow Enter key to submit main message (Shift+Enter for new line)
+        document.getElementById('messageInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                postMessage();
+            }
+        });
+    </script>
+</body>
+</html>
