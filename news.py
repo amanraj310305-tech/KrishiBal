@@ -1,0 +1,145 @@
+'''import requests
+
+# API endpoint and key
+url = "https://api.apitube.io/v1/news/everything"
+params = {
+    "q": "agriculture",
+    "per_page": 10,
+    "api_key": "api_live_oSVPOcJOGleuvsMvuuOcYg3EllyCmFFJOmrrvG66PXosdd87UFz0U1TP"
+}
+
+# Make the request
+response = requests.get(url, params=params)
+
+# Convert response to JSON
+data = response.json()
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Ensure 'data' and 'articles' keys exist
+    if 'data' in data and 'articles' in data['data']:
+        articles = data['data']['articles']
+        for article in articles:
+            print(f"Title       : {article.get('title', 'N/A')}")
+            print(f"Source      : {article.get('source', {}).get('name', 'N/A')}")
+            print(f"Published At: {article.get('published_at', 'N/A')}")
+            print(f"URL         : {article.get('url', 'N/A')}")
+            print("-" * 80)
+    else:
+        print("No articles found in the response.")
+else:
+    print(f"Request failed with status code {response.status_code}")
+    print(data)'''
+import requests
+from datetime import datetime
+
+
+def get_farming_news():
+    """
+    Fetch farming-related news and government schemes
+    """
+    try:
+        # Using NewsAPI (you'll need to get a free API key from https://newsapi.org/)
+        api_key = "4be147dd716f49d2a7cebbf310af24ce"
+
+        # Search for agriculture-related news
+        url = f"https://newsapi.org/v2/everything?q=agriculture OR farming OR crops OR government schemes farmers&language=en&sortBy=publishedAt&apiKey={api_key}"
+
+        response = requests.get(url)
+        data = response.json()
+
+        if data['status'] == 'ok':
+            articles = data['articles'][:10]  # Get top 10 articles
+
+            news_list = []
+            for article in articles:
+                news_item = {
+                    'title': article['title'],
+                    'description': article['description'],
+                    'url': article['url'],
+                    'source': article['source']['name'],
+                    'published_at': article['publishedAt'],
+                    'image': article['urlToImage']
+                }
+                news_list.append(news_item)
+
+            return {'success': True, 'news': news_list}
+        else:
+            return {'success': False, 'error': 'Failed to fetch news'}
+
+    except Exception as e:
+        return {'success': False, 'error': str(e)}
+
+
+def get_government_schemes():
+    """
+    Fetch government schemes for farmers (you can customize this)
+    """
+    # This is a static list - you can integrate with government APIs if available
+    schemes = [
+        {
+            'title': 'PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)',
+            'description': '₹6000 per year in three equal installments to all landholding farmers',
+            'link': 'https://pmkisan.gov.in/',
+            'category': 'Financial Support'
+        },
+        {
+            'title': 'Kisan Credit Card (KCC)',
+            'description': 'Credit facility for farmers to purchase agriculture inputs and meet crop production expenses',
+            'link': 'https://www.india.gov.in/spotlight/kisan-credit-card-kcc',
+            'category': 'Credit Facility'
+        },
+        {
+            'title': 'Pradhan Mantri Fasal Bima Yojana (PMFBY)',
+            'description': 'Crop insurance scheme providing financial support in case of crop failure',
+            'link': 'https://pmfby.gov.in/',
+            'category': 'Insurance'
+        },
+        {
+            'title': 'Soil Health Card Scheme',
+            'description': 'Provides soil health cards to farmers with crop-wise recommendations',
+            'link': 'https://soilhealth.dac.gov.in/',
+            'category': 'Soil Management'
+        },
+        {
+            'title': 'Paramparagat Krishi Vikas Yojana (PKVY)',
+            'description': 'Promotes organic farming and organic value chain development',
+            'link': 'https://pgsindia-ncof.gov.in/',
+            'category': 'Organic Farming'
+        }
+    ]
+
+    return {'success': True, 'schemes': schemes}
+
+
+def search_news(query):
+    """
+    Search for specific farming news based on query
+    """
+    try:
+        api_key = "YOUR_NEWSAPI_KEY_HERE"
+
+        url = f"https://newsapi.org/v2/everything?q={query} farming agriculture&language=en&sortBy=relevancy&apiKey={api_key}"
+
+        response = requests.get(url)
+        data = response.json()
+
+        if data['status'] == 'ok':
+            articles = data['articles'][:5]
+
+            news_list = []
+            for article in articles:
+                news_item = {
+                    'title': article['title'],
+                    'description': article['description'],
+                    'url': article['url'],
+                    'source': article['source']['name']
+                }
+                news_list.append(news_item)
+
+            return {'success': True, 'news': news_list}
+        else:
+            return {'success': False, 'error': 'No news found'}
+
+    except Exception as e:
+        return {'success': False, 'error': str(e)}
